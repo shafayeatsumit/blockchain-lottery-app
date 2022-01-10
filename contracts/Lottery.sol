@@ -8,17 +8,26 @@ contract Lottery {
     uint256 public usdEntryFee;
     AggregatorV3Interface internal ethUsdPriceFeed;
 
+    // address _priceFeedAddress = 0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419;
+
     constructor(address _priceFeedAddress) public {
         usdEntryFee = 50 * (10**18);
         ethUsdPriceFeed = AggregatorV3Interface(_priceFeedAddress);
     }
 
-    function enter() public {
+    function enter() public payable {
         // $50 minimum
-        players.push(msg.sender);
     }
 
-    function getEntranceFee() public {}
+    function getEntranceFee() public view returns (uint256) {
+        (, int256 price, , , ) = ethUsdPriceFeed.latestRoundData();
+        uint256 adjustedPrice = uint256(price) * 10**10; // 18 decimals
+        // $50, $2,000 / ETH
+        // 50/2,000
+        // 50 * 100000 / 2000
+        uint256 costToEnter = (usdEntryFee * 10**18) / adjustedPrice;
+        return costToEnter;
+    }
 
     function startLottery() public {}
 
