@@ -4,6 +4,12 @@ initialize a project with brownie
 brownie init
 ```
 
+brownie list accounts
+
+```sh
+brownie accounts list
+```
+
 brownie run a specific test in brownie
 
 ```sh
