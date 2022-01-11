@@ -18,5 +18,5 @@ def test_get_entrance_fee():
 def test_only_owner():
     account = accounts[0]    
     lottery = Lottery.deploy(config["networks"][network.show_active()]["eth_usd_price_feed"],{"from":account})
-    lottery.endLottery({"from":account})
+    lottery.endLottery()
     
